@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>MassShooting</title>
+        <style>
+            #title {
+                text-align: center;
+            }
+            
+            a:link {background-color:#B2FF99;}    
+            a:visited {background-color:#FFFF85;} 
+            a:hover {background-color:#FF704D;}   
+            a:active {background-color:#FF704D;}  
+            a:link{ font-size:30px}
+            
+
+        </style>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+        <script type="module">
+
+            import * as d3 from "https://cdn.skypack.dev/d3@7";
+            
+            const div = d3.selectAll("div");
+            
+            </script>
+            
+    </head>
+
+    <body>
+        
+
+        <div id="title"> <h1> Mass shooting in the US </h1></div>
+        <p id="title" ><a href="http://localhost:3000/mass_shooting_us" target="_blank">Cliquez pour afficher la carte</a><p></p>
+        <div id="d3"></div>
+        <script src="https://d3js.org/d3.v4.min.js"></script>
+        <svg></svg>
+        <script>
+          
+            var width = 600;
+            var height = 600;
+
+            var dataset = dataset = [['yes',84],['unknow',16],['no',16],['TBD',7],['other',2]];
+
+            var pie = d3.pie()
+                        .sort(null)
+                        .value(function(d){
+                        return d[1];
+                        });
+            var piedata = pie(dataset);
+
+            var outerRadius = width / 4;
+            var innerRadius = 0;
+
+            var arc = d3.arc()
+                        .outerRadius(outerRadius)
+                        .innerRadius(innerRadius);
+
+            var colors = d3.schemeCategory10;
+
+            var svg = d3.select('body')
+                        .append('svg')
+                        .attr('width', width)
+                        .attr('height', height);
+
+            var arcs = svg.selectAll('g')
+                        .data(piedata)
+                        .enter()
+                        .append('g')
+                        .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
+
+            arcs.append('path')
+                .attr('fill', function(d, i){
+                return colors[i];
+                })
+                .attr('d', function(d){
+                return arc(d);
+                });
+
+            arcs.append('text')
+                    .attr('transform', function(d, i){
+                        var x = arc.centroid(d)[0] * 2.8;
+                        var y = arc.centroid(d)[1] * 2.8;
+                        if(i === 4) {
+                            return 'translate(' + (x * 1.2) + ', ' + (y * 1.2) + ')';
+                        } else if(i === 3) {
+                        return 'translate(' + (x - 40) + ', ' + y + ')';
+                        } else if(i === 5) {
+                            return 'translate(' + (x + 40) + ', ' + y + ')';
+                        }
+                        return 'translate(' + x + ', ' + y + ')';
+                    })
+                    .attr('text-anchor', 'middle')
+                    .text(function(d){
+                        var percent = Number(d.value) / d3.sum(dataset, function(d){
+                            return d[1];
+                        }) * 100;
+                        return d.data[0] + ' ' + percent.toFixed(1) + '%';
+                    })
+
+            arcs.append('line')
+                    .attr('stroke', 'black')
+                    .attr('x1', function(d){ return arc.centroid(d)[0] * 2; })
+                    .attr('y1', function(d){ return arc.centroid(d)[1] * 2; })
+                    .attr('x2', function(d, i){
+                        if(i === 4) {
+                            return arc.centroid(d)[0] * 3.2;
+                        }
+                        return arc.centroid(d)[0] * 2.5;
+                    })
+                    .attr('y2', function(d, i){
+                        if(i === 4) {
+                            return arc.centroid(d)[1] * 3.2;
+                        }
+                        return arc.centroid(d)[1] * 2.5;
+                    });
+
+            
+        
+
+        </script>
+        <text x="100" y="50" fill="#AAFE45">
+            Fig 2 :weapons_obtained_legally
+        </text></p></br>
+
+        <script>
+          
+            var width = 600;
+            var height = 600;
+
+            var dataset1 = dataset1 = [['yes',62],['unknow',41],['no',17],['TBD',5]];
+
+            var pie1 = d3.pie()
+                        .sort(null)
+                        .value(function(d){
+                        return d[1];
+                        });
+            var piedata1 = pie(dataset1);
+
+            var outerRadius = width / 4;
+            var innerRadius = 0;
+
+            var arc1 = d3.arc()
+                        .outerRadius(outerRadius)
+                        .innerRadius(innerRadius);
+
+            var colors = d3.schemeCategory10;
+
+            var svg = d3.select('body')
+                        .append('svg')
+                        .attr('width', width)
+                        .attr('height', height);
+
+            var arcs = svg.selectAll('g')
+                        .data(piedata1)
+                        .enter()
+                        .append('g')
+                        .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
+
+            arcs.append('path')
+                .attr('fill', function(d, i){
+                return colors[i];
+                })
+                .attr('d', function(d){
+                return arc1(d);
+                });
+
+            arcs.append('text')
+                    .attr('transform', function(d, i){
+                        var x1 = arc1.centroid(d)[0] * 2.8;
+                        var y1 = arc1.centroid(d)[1] * 2.8;
+                        if(i === 4) {
+                            return 'translate(' + (x1 * 1.2) + ', ' + (y1 * 1.2) + ')';
+                        } else if(i === 3) {
+                        return 'translate(' + (x1 - 40) + ', ' + y1 + ')';
+                        } else if(i === 5) {
+                            return 'translate(' + (x1 + 40) + ', ' + y1 + ')';
+                        }
+                        return 'translate(' + x1 + ', ' + y1 + ')';
+                    })
+                    .attr('text-anchor', 'middle')
+                    .text(function(d){
+                        var percent = Number(d.value) / d3.sum(dataset1, function(d){
+                            return d[1];
+                        }) * 100;
+                        return d.data[0] + ' ' + percent.toFixed(1) + '%';
+                    })
+
+            arcs.append('line')
+                    .attr('stroke', 'black')
+                    .attr('x1', function(d){ return arc1.centroid(d)[0] * 2; })
+                    .attr('y1', function(d){ return arc1.centroid(d)[1] * 2; })
+                    .attr('x2', function(d, i){
+                        if(i === 4) {
+                            return arc1.centroid(d)[0] * 3.2;
+                        }
+                        return arc1.centroid(d)[0] * 2.5;
+                    })
+                    .attr('y2', function(d, i){
+                        if(i === 4) {
+                            return arc1.centroid(d)[1] * 3.2;
+                        }
+                        return arc1.centroid(d)[1] * 2.5;
+                    });
+
+            
+        
+
+        </script>
+        <text x="100" y="50" fill="#AAFE45">
+            Fig3 : prior_signs_mental_health_issues
+        </text></br>
+        
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
+
+        <script>
+
+        var margin = {top: 20, right: 30, bottom: 70, left: 40},
+            width = 1200 - margin.left - margin.right,
+            height = 300 - margin.top - margin.bottom;
+
+        // Parse the date / time
+        //var	parseDate = d3.time.format("%Y").parse;
+
+        var x = d3.scale.ordinal().rangeRoundBands([0, width], .05);
+
+        var y = d3.scale.linear().range([height, 0]);
+
+        var xAxis = d3.svg.axis()
+            .scale(x)
+            .orient("bottom")
+            //.tickFormat(d3.time.format("%Y"));
+
+        var yAxis = d3.svg.axis()
+            .scale(y)
+            .orient("left")
+            .ticks(10);
+
+        var svg = d3.select("body").append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+            .attr("transform", 
+                "translate(" + margin.left + "," + margin.top + ")");
+
+
+
+        d3.csv("year_total_victim.csv", function(error, data) {
+
+            data.forEach(function(d) {
+                d.year = d.year;
+                d.total_victims = +d.total_victims;
+            });
+            
+        x.domain(data.map(function(d) { return d.year; }));
+        y.domain([0, d3.max(data, function(d) { return d.total_victims; })]);
+
+        svg.append("g")
+            .attr("class", "x axis")
+            .attr("transform", "translate(0," + height + ")")
+            .call(xAxis)
+            .selectAll("text")
+            .style("text-anchor", "end")
+            .attr("dx", "-.8em")
+            .attr("dy", "-.55em")
+            .attr("transform", "rotate(-90)" );
+
+        svg.append("g")
+            .attr("class", "y axis")
+            .call(yAxis)
+            .append("text")
+            .attr("transform", "rotate(-90)")
+            .attr("y", 6)
+            .attr("dy", ".71em")
+            .style("text-anchor", "end")
+            .text("number of killer");
+
+        svg.selectAll("bar")
+            .data(data)
+            .enter().append("rect")
+            .style("fill", "steelblue")
+            .attr("x", function(d) { return x(d.year); })
+            .attr("width", x.rangeBand())
+            .attr("y", function(d) { return y(d.total_victims); })
+            .attr("height", function(d) { return height - y(d.total_victims); })
+            .text('ss');
+            
+
+        });
+
+        </script>
+        <text x="100" y="50" fill="#AAFE45">
+            Fig4 : number of killer in each year
+        </text></p></br>
+
+        
+        <div id="d3"></div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
+        <svg></svg>
+        <script id="race">   
+            
+            //dimensions et marges du grapique
+            var margin = {top: 20, right: 5, bottom: 20, left: 10},
+                width = 1000 - margin.left - margin.right,
+                height = 300 - margin.top - margin.bottom;
+
+            //definition remplissage axe abscisse et ordonnee
+            var x = d3.scale.ordinal().rangeRoundBands([0, width], .05);
+            var y = d3.scale.linear().range([height, 0]);
+            
+            var xAxis = d3.svg.axis()
+                .scale(x)
+                .orient("bottom");
+
+            var yAxis = d3.svg.axis()
+                .scale(y)
+                .orient("left")
+                .ticks(10);
+
+            var numberOfMassShooting=0;
+
+            //creation svg
+            var svgEthnie = d3.select("body").append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+            //lecture du fichier json
+            d3.json("donnee_projet.json", function(error, data) {
+                if (error) throw error;
+                
+                data.forEach(function(f) {
+                    numberOfMassShooting+=1;
+                    if (f.race=="White" || f.race=="white"|| f.race=="White "){
+                        f.race="White";
+                    }
+                    else if (f.race=="Black" || f.race=="black"){
+                        f.race="Black";
+                    }
+                    else if (f.race=="-" || f.race=="unclear"){
+                        f.race="Unknow";
+                    }
+                    else{
+                        f.race
+                    }
+                });
+                
+                // Mise en relation du scale avec les données de notre fichier
+                // Pour l'axe X, c'est les differentes ethnies
+                // Pour l'axe Y, c'est le nb d'individus
+                x.domain(data.map(function(f) { return f.race; }));
+                y.domain([0, d3.max(data, function(f) { return f.nbKE; })]);
+                
+                //ajout axe x
+                svgEthnie.append("g")
+                    .attr("class", "x axis")
+                    .attr("transform", "translate(0," + height + ")")
+                    .call(xAxis)
+                    .selectAll("text")
+                    .style("text-anchor", "end");
+
+                //ajout axe y
+                svgEthnie.append("g")
+                    .attr("class", "y axis")
+                    .call(yAxis)
+                    .append("text")
+                    .attr("transform", "rotate(-90)")
+                    .attr("y", 6)
+                    .attr("dy", ".71em")
+                    .text('number of killer')
+                    .style("text-anchor", "end");
+
+                //ajout des barres
+                svgEthnie.selectAll("bar")
+                    .data(data)
+                    .enter()
+                    .append("rect")
+                    .style("fill", function(f) {if (f.race=="White"){return "#FFCCFF"} else if(f.race=="Black"){return "#000000"} else if (f.race=="Asian"){return "#0000FF"} else if(f.race=="Unknow"){return "#666666"} else if (f.race=="Latino"){return "#CC0066"} else if(f.race=="Other"){return "#9999FF"} else {return "#990000"}})
+                    .attr("x", function(f) { return x(f.race);})
+                    .attr("width", x.rangeBand())
+                    .attr("y", function(f) { return y(f.nbKE);})
+                    .attr("height", function(f) { return height - y(f.nbKE); })
+
+            
+            });
+        </script>
+        <text x="100" y="50" fill="#AAFE45">
+            Fig5 : number of killer in differents ethnies
+        </text></p></br>
+
+        <script id="gender">
+
+            //dimensions et marges du grapique
+            var margin = {top: 20, right: 20, bottom: 70, left: 40},
+                width = 1000 - margin.left - margin.right,
+                height = 300 - margin.top - margin.bottom;
+
+            //definition remplissage axe abscisse et ordonnee
+            var x = d3.scale.ordinal().rangeRoundBands([0, width], .05);
+            var y = d3.scale.linear().range([height, 0]);
+
+            var xAxis = d3.svg.axis()
+                .scale(x)
+                .orient("bottom");
+
+            var yAxis = d3.svg.axis()
+                .scale(y)
+                .orient("left")
+                .ticks(10);
+
+            var nbKillerM=0;
+            var nbKillerW=0;
+            var nbKillerD=0;
+
+            //creation svg
+            var svgGenre = d3.select("body").append("svg")
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom)
+                .append("g")
+                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+            //ajout div pour tooltip
+            const div = d3.select("body").append("div")
+                .attr("class", "tooltip")         
+                .style("opacity", 0);
+
+            //lecture du fichier json
+            d3.json("donnee_projet.json", function(error, data) {
+                if (error) throw error;
+
+                data.forEach(function(d) {
+                    if (d.gender=="M" || d.gender=="Male"){
+                        nbKillerM=d.nbK;
+                        d.gender="Male";
+                    }
+                    else if (d.gender=="F" || d.gender=="Female"){
+                        nbKillerW=d.nbK;
+                        d.gender="Female";
+                    }
+                    else {
+                        nbKillerD=d.nbK;
+                        d.gender="Duo";
+                    }
+                });
+
+                // Mise en relation du scale avec les donnÃ©es de notre fichier
+                // Pour l'axe X, c'est femme/homme
+                // Pour l'axe Y, c'est le nb d'individus
+                x.domain(data.map(function(d) { return d.gender; }));
+                y.domain([0, d3.max(data, function(d) { return d.nbK; })]);
+
+                //ajout axe x
+                svgGenre.append("g")
+                    .attr("class", "x axis")
+                    .attr("transform", "translate(0," + height + ")")
+                    .call(xAxis)
+                    .selectAll("text")
+                    .style("text-anchor", "end");
+                    // .attr("dx", "-.8em")
+                    // .attr("dy", ".8em")
+                    // .attr("transform", "rotate(0)" );
+
+                //ajout axe y
+                svgGenre.append("g")
+                    .attr("class", "y axis")
+                    .call(yAxis)
+                    .append("text")
+                    .attr("transform", "rotate(-90)")
+                    .attr("y", 6)
+                    .attr("dy", ".71em")
+                    .text('number of killer')
+                    .style("text-anchor", "end");
+
+                //ajout des barres
+                svgGenre.selectAll("bar")
+                    .data(data)
+                    .enter()
+                    .append("rect")
+                    .style("fill", function(d) {if (d.gender=="Female"){return "#00FF33"} else if(d.gender=="Male"){return "#9999FF"} else {return "#FF3366"}})
+                    .attr("x", function(d) { return x(d.gender);})
+                    .attr("width", x.rangeBand())
+                    .attr("y", function(d) { return y(d.nbK);})
+                    .attr("height", function(d) { return height - y(d.nbK); })
+                    .text('Gender of killers')
+
+                //lire poucentage lorsque souris sur barre
+                .on("mouseover", function(event, d) {
+                    div.transition()        
+                        .duration(200)      
+                        .style("opacity", .9);
+                    div.html("pourcentage: "+function(d) { if (d.gender=="Female"){return nbKillerW} else if(d.gender=="Male"){return nbKillerM} else {return nbKillerD}})
+                        .style("left", (event.pageX + 10) + "px")     
+                        .style("top", (event.pageY - 50) + "px");
+                    })
+                .on("mouseout", function(event, d) {
+                    div.transition()
+                        .duration(500)
+                        .style("opacity", 0);
+                    });
+
+            });
+
+        </script>
+        <text x="100" y="50" fill="#AAFE45">
+            Fig6 : number of killer in differents gender
+        </text></p></br>
+        
+
+
+
+    </body>
+</html>
